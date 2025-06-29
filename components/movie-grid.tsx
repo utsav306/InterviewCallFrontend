@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/movie-store';
-import { MovieCard } from './movie-card';
-import { LoadingSpinner } from './loading-spinner';
-import { motion } from 'framer-motion';
-import { Film, Search, TrendingUp, Star, Award } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/movie-store";
+import { MovieCard } from "./movie-card";
+import { LoadingSpinner } from "./loading-spinner";
+import { motion } from "framer-motion";
+import { Film, Search, TrendingUp, Star, Award } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export function MovieGrid() {
-  const { movies, loading, error, searchQuery, currentView, activeCategory } = useSelector((state: RootState) => state.movies);
+  const { movies, loading, error, searchQuery, currentView, activeCategory } =
+    useSelector((state: RootState) => state.movies);
 
   if (loading) {
     return <LoadingSpinner />;
@@ -33,7 +34,11 @@ export function MovieGrid() {
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
             {error}
           </p>
-          <Button variant="outline" className="border-red-300 dark:border-red-500/50 text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10" onClick={() => window.location.reload()}>
+          <Button
+            variant="outline"
+            className="border-red-300 dark:border-red-500/50 text-red-600 dark:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
+            onClick={() => window.location.reload()}
+          >
             Try Again
           </Button>
         </div>
@@ -42,7 +47,7 @@ export function MovieGrid() {
   }
 
   // Show welcome screen for home view when no search is active
-  if (currentView === 'home' && !searchQuery.trim()) {
+  if (currentView === "home" && !searchQuery.trim()) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -62,7 +67,7 @@ export function MovieGrid() {
               <Film className="w-16 h-16 text-white" />
             </div>
           </motion.div>
-          
+
           {/* Main Content */}
           <div className="space-y-4">
             <motion.h3
@@ -79,11 +84,12 @@ export function MovieGrid() {
               transition={{ delay: 0.3 }}
               className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed"
             >
-              Search for your favorite movies, TV series, and episodes or explore our curated collections. 
-              Use the search bar above or click on the category buttons to get started.
+              Search for your favorite movies, TV series, and episodes or
+              explore our curated collections. Use the search bar above or click
+              on the category buttons to get started.
             </motion.p>
           </div>
-          
+
           {/* Feature Cards */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -92,9 +98,24 @@ export function MovieGrid() {
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12"
           >
             {[
-              { icon: TrendingUp, title: "Trending", desc: "Discover what's popular", color: "text-green-500" },
-              { icon: Star, title: "Top Rated", desc: "Find critically acclaimed", color: "text-yellow-500" },
-              { icon: Award, title: "Award Winners", desc: "Explore award-winning", color: "text-purple-500" }
+              {
+                icon: TrendingUp,
+                title: "Trending",
+                desc: "Discover what's popular",
+                color: "text-green-500",
+              },
+              {
+                icon: Star,
+                title: "Top Rated",
+                desc: "Find critically acclaimed",
+                color: "text-yellow-500",
+              },
+              {
+                icon: Award,
+                title: "Award Winners",
+                desc: "Explore award-winning",
+                color: "text-purple-500",
+              },
             ].map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -103,9 +124,15 @@ export function MovieGrid() {
                 transition={{ delay: 0.5 + index * 0.1 }}
                 className="glass-effect rounded-lg p-6 text-center hover:scale-105 transition-all duration-300"
               >
-                <feature.icon className={`w-8 h-8 mx-auto mb-3 ${feature.color}`} />
-                <h4 className="font-semibold mb-1 text-gray-900 dark:text-white">{feature.title}</h4>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{feature.desc}</p>
+                <feature.icon
+                  className={`w-8 h-8 mx-auto mb-3 ${feature.color}`}
+                />
+                <h4 className="font-semibold mb-1 text-gray-900 dark:text-white">
+                  {feature.title}
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {feature.desc}
+                </p>
               </motion.div>
             ))}
           </motion.div>
@@ -118,35 +145,38 @@ export function MovieGrid() {
   if (movies.length === 0) {
     const getEmptyStateContent = () => {
       switch (currentView) {
-        case 'trending':
+        case "trending":
           return {
-            title: 'No Trending Movies Found',
-            description: 'Unable to load trending movies at the moment. Please try again later.',
-            icon: TrendingUp
+            title: "No Trending Movies Found",
+            description:
+              "Unable to load trending movies at the moment. Please try again later.",
+            icon: TrendingUp,
           };
-        case 'top-rated':
+        case "top-rated":
           return {
-            title: 'No Top Rated Movies Found',
-            description: 'Unable to load top rated movies at the moment. Please try again later.',
-            icon: Star
+            title: "No Top Rated Movies Found",
+            description:
+              "Unable to load top rated movies at the moment. Please try again later.",
+            icon: Star,
           };
-        case 'award-winners':
+        case "award-winners":
           return {
-            title: 'No Award Winners Found',
-            description: 'Unable to load award-winning movies at the moment. Please try again later.',
-            icon: Award
+            title: "No Award Winners Found",
+            description:
+              "Unable to load award-winning movies at the moment. Please try again later.",
+            icon: Award,
           };
-        case 'search':
+        case "search":
           return {
-            title: 'No Results Found',
+            title: "No Results Found",
             description: `We couldn't find any movies matching "${searchQuery}". Try adjusting your search terms or filters.`,
-            icon: Search
+            icon: Search,
           };
         default:
           return {
-            title: 'No Content Available',
-            description: 'No content available for this section.',
-            icon: Film
+            title: "No Content Available",
+            description: "No content available for this section.",
+            icon: Film,
           };
       }
     };
@@ -170,11 +200,26 @@ export function MovieGrid() {
           <p className="text-gray-600 dark:text-gray-400 mb-4">
             {emptyState.description}
           </p>
-          {currentView === 'search' && (
+          {currentView === "search" && (
             <div className="flex flex-wrap gap-2 justify-center">
-              <Badge variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400">Try different keywords</Badge>
-              <Badge variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400">Check spelling</Badge>
-              <Badge variant="outline" className="border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400">Use filters</Badge>
+              <Badge
+                variant="outline"
+                className="border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+              >
+                Try different keywords
+              </Badge>
+              <Badge
+                variant="outline"
+                className="border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+              >
+                Check spelling
+              </Badge>
+              <Badge
+                variant="outline"
+                className="border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400"
+              >
+                Use filters
+              </Badge>
             </div>
           )}
         </div>
@@ -191,14 +236,17 @@ export function MovieGrid() {
         className="flex items-center justify-between"
       >
         <div className="flex items-center space-x-3">
-          <Badge variant="secondary" className="text-sm bg-primary/20 text-primary border-primary/30">
-            {movies.length} {movies.length === 1 ? 'result' : 'results'}
+          <Badge
+            variant="secondary"
+            className="text-sm bg-primary/20 text-primary border-primary/30"
+          >
+            {movies.length} {movies.length === 1 ? "result" : "results"}
           </Badge>
         </div>
       </motion.div>
-      
+
       {/* Movies Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 p-8">
         {movies.map((movie, index) => (
           <MovieCard key={movie.imdbID} movie={movie} index={index} />
         ))}

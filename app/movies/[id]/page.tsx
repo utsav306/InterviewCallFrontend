@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { 
-  ArrowLeft, 
-  Calendar, 
-  Clock, 
-  Star, 
-  Users, 
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  Star,
+  Users,
   Film,
   Award,
   Globe,
@@ -19,24 +19,30 @@ import {
   Play,
   Heart,
   Share2,
-  Bookmark
-} from 'lucide-react';
+  Bookmark,
+} from "lucide-react";
 
-import { RootState, AppDispatch } from '@/store/movie-store';
-import { fetchMovieDetails, clearCurrentMovie, setUserRating } from '@/store/movie-store';
-import { StarRating } from '@/components/star-rating';
-import { LoadingSpinner } from '@/components/loading-spinner';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { RootState, AppDispatch } from "@/store/movie-store";
+import {
+  fetchMovieDetails,
+  clearCurrentMovie,
+  setUserRating,
+} from "@/store/movie-store";
+import { StarRating } from "@/components/star-rating";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 export default function MovieDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const { currentMovie, loading, error, userRatings } = useSelector((state: RootState) => state.movies);
+  const { currentMovie, loading, error, userRatings } = useSelector(
+    (state: RootState) => state.movies,
+  );
 
   const movieId = params.id as string;
   const userRating = userRatings[movieId] || 0;
@@ -79,9 +85,7 @@ export default function MovieDetailsPage() {
               <h3 className="text-xl font-bold text-destructive mb-2">
                 Error Loading Movie
               </h3>
-              <p className="text-muted-foreground text-sm mb-6">
-                {error}
-              </p>
+              <p className="text-muted-foreground text-sm mb-6">{error}</p>
               <Button variant="outline" onClick={() => router.back()}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Go Back
@@ -97,23 +101,27 @@ export default function MovieDetailsPage() {
     return null;
   }
 
-  const isValidPoster = currentMovie.Poster !== 'N/A' && currentMovie.Poster;
+  const isValidPoster = currentMovie.Poster !== "N/A" && currentMovie.Poster;
   const imdbRating = parseFloat(currentMovie.imdbRating) || 0;
-  const hasBoxOffice = currentMovie.BoxOffice && currentMovie.BoxOffice !== 'N/A';
+  const hasBoxOffice =
+    currentMovie.BoxOffice && currentMovie.BoxOffice !== "N/A";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/30">
       {/* Animated Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/5 to-purple-400/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-pink-400/5 to-orange-400/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div
+          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-pink-400/5 to-orange-400/5 rounded-full blur-3xl animate-float"
+          style={{ animationDelay: "2s" }}
+        />
       </div>
 
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 glass-effect border-b border-white/20 dark:border-white/10 sticky top-0 backdrop-blur-xl"
+        className="relative z-10 glass-effect border-b border-white/20 dark:border-white/10  top-0 backdrop-blur-xl"
       >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -207,7 +215,10 @@ export default function MovieDetailsPage() {
                 <Badge className="bg-primary/90 hover:bg-primary text-lg px-4 py-2">
                   {currentMovie.Rated}
                 </Badge>
-                <Badge variant="outline" className="border-white/30 text-white text-lg px-4 py-2">
+                <Badge
+                  variant="outline"
+                  className="border-white/30 text-white text-lg px-4 py-2"
+                >
                   {currentMovie.Type}
                 </Badge>
               </motion.div>
@@ -220,15 +231,21 @@ export default function MovieDetailsPage() {
                 className="grid grid-cols-1 md:grid-cols-2 gap-8"
               >
                 <div className="space-y-2">
-                  <h3 className="text-sm font-medium text-white/70">IMDb Rating</h3>
+                  <h3 className="text-sm font-medium text-white/70">
+                    IMDb Rating
+                  </h3>
                   <div className="flex items-center space-x-3">
                     <Star className="w-6 h-6 fill-yellow-400 text-yellow-400" />
-                    <span className="text-2xl font-bold">{currentMovie.imdbRating}</span>
+                    <span className="text-2xl font-bold">
+                      {currentMovie.imdbRating}
+                    </span>
                     <span className="text-white/70">/10</span>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-sm font-medium text-white/70">Your Rating</h3>
+                  <h3 className="text-sm font-medium text-white/70">
+                    Your Rating
+                  </h3>
                   <StarRating
                     rating={userRating}
                     onRatingChange={handleRating}
@@ -244,19 +261,34 @@ export default function MovieDetailsPage() {
                 transition={{ delay: 0.6 }}
                 className="flex flex-wrap gap-4"
               >
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-xl px-8">
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-white rounded-xl px-8"
+                >
                   <Play className="w-5 h-5 mr-2 fill-white" />
                   Watch Trailer
                 </Button>
-                <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 rounded-xl">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-white/30 text-white hover:bg-white/10 rounded-xl"
+                >
                   <Heart className="w-5 h-5 mr-2" />
                   Add to Favorites
                 </Button>
-                <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 rounded-xl">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-white/30 text-white hover:bg-white/10 rounded-xl"
+                >
                   <Bookmark className="w-5 h-5 mr-2" />
                   Watchlist
                 </Button>
-                <Button variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10 rounded-xl">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="border-white/30 text-white hover:bg-white/10 rounded-xl"
+                >
                   <Share2 className="w-5 h-5 mr-2" />
                   Share
                 </Button>
@@ -271,8 +303,12 @@ export default function MovieDetailsPage() {
               >
                 <h3 className="text-sm font-medium text-white/70">Genres</h3>
                 <div className="flex flex-wrap gap-3">
-                  {currentMovie.Genre.split(', ').map((genre) => (
-                    <Badge key={genre} variant="secondary" className="bg-white/10 text-white border-0 px-4 py-2 text-sm">
+                  {currentMovie.Genre.split(", ").map((genre) => (
+                    <Badge
+                      key={genre}
+                      variant="secondary"
+                      className="bg-white/10 text-white border-0 px-4 py-2 text-sm"
+                    >
                       {genre}
                     </Badge>
                   ))}
@@ -314,7 +350,9 @@ export default function MovieDetailsPage() {
               <div className="space-y-6">
                 <div>
                   <h4 className="font-bold text-lg mb-2">Director</h4>
-                  <p className="text-muted-foreground">{currentMovie.Director}</p>
+                  <p className="text-muted-foreground">
+                    {currentMovie.Director}
+                  </p>
                 </div>
                 <Separator />
                 <div>
@@ -340,17 +378,23 @@ export default function MovieDetailsPage() {
               <div className="space-y-6">
                 <div>
                   <h4 className="font-bold text-lg mb-2">Release Date</h4>
-                  <p className="text-muted-foreground">{currentMovie.Released}</p>
+                  <p className="text-muted-foreground">
+                    {currentMovie.Released}
+                  </p>
                 </div>
                 <Separator />
                 <div>
                   <h4 className="font-bold text-lg mb-2">Language</h4>
-                  <p className="text-muted-foreground">{currentMovie.Language}</p>
+                  <p className="text-muted-foreground">
+                    {currentMovie.Language}
+                  </p>
                 </div>
                 <Separator />
                 <div>
                   <h4 className="font-bold text-lg mb-2">Country</h4>
-                  <p className="text-muted-foreground">{currentMovie.Country}</p>
+                  <p className="text-muted-foreground">
+                    {currentMovie.Country}
+                  </p>
                 </div>
                 {hasBoxOffice && (
                   <>
@@ -360,7 +404,9 @@ export default function MovieDetailsPage() {
                         <DollarSign className="w-5 h-5 mr-2" />
                         Box Office
                       </h4>
-                      <p className="text-muted-foreground">{currentMovie.BoxOffice}</p>
+                      <p className="text-muted-foreground">
+                        {currentMovie.BoxOffice}
+                      </p>
                     </div>
                   </>
                 )}
@@ -370,7 +416,7 @@ export default function MovieDetailsPage() {
         </motion.div>
 
         {/* Awards */}
-        {currentMovie.Awards && currentMovie.Awards !== 'N/A' && (
+        {currentMovie.Awards && currentMovie.Awards !== "N/A" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
